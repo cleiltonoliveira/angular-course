@@ -1,0 +1,24 @@
+<!-- <p FundoAmarelo>Texto com fundo amarelo</p> -->
+
+<p highlightMouse> Texto com highlight on mouse</p>
+
+<!-- <p highlight [defaultColor]="'grey'" [highlightColor]="'red'">
+    Texto com highlight com cores personalizadas</p> -->
+
+<p [highlight]="'red'" [defaultColor]="'grey'">
+    <!--Utiliza o mesmo nome da diretiva para passar a cor highlight atraves de input property-->
+    Texto com highlight com cores personalizadas</p>
+
+
+<div *ngIf="mostrarCursos">Lista de cursos</div>
+<div *ngElse="mostrarCursos">Lista de cursos vazia</div>
+<br>
+<div>
+    <button (click)="onMostrarCursos()">Mostrar ou esconder cursos</button>
+</div>
+
+<template [ngElse]="mostrarCursos">
+    <div>
+        Lista de cursos vazia
+    </div>
+</template>
