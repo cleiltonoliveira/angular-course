@@ -1,1 +1,37 @@
-<p>aluno-form works!</p>
+<h5>Criar/Editar Aluno</h5>
+
+
+<div class="col s12">
+
+
+    <div class="row">
+
+        <div class="input-field col s12">
+
+            <input type="text" disabled [(ngModel)]="aluno.id" id="disabled">
+            <label for="disabled" class="active">#</label>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="input-field col s12">
+
+            <input class="validate" disabled [(ngModel)]="aluno.nome" id="nome">
+            <label for="nome" class="active">Nome</label>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="input-field col s12">
+
+            <input class="validate" disabled [(ngModel)]="aluno.email" id="email">
+            <label for="email" class="active">email</label>
+        </div>
+    </div>
+
+
+
+
+</div>
