@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CursosGuard } from './guards/cursos.guard';
 import { AlunosGuard } from './guards/alunos.guard';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada/pagina-nao-encontrada.component';
 
 const appRoutes: Routes = [
 
@@ -32,13 +33,15 @@ const appRoutes: Routes = [
     // { path: 'curso/:id', component: CursoDetalheComponent },
     { path: 'login', component: LoginComponent },
     // { path: 'naoEncontrado', component: CursoNaoEncontradoComponent },
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] }
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: '', redirectTo: '/home', pathMatch: 'full'},
+    { path: '**', component: PaginaNaoEncontradaComponent}
 ];
 
 // export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES);
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
+    imports: [RouterModule.forRoot(appRoutes, {useHash: true})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {
