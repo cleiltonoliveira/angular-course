@@ -15,7 +15,6 @@ export class DataFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
@@ -31,22 +30,37 @@ export class DataFormComponent implements OnInit {
         }
       )
     });
-
   }
 
   onSubmit() {
 
     console.log(this.formulario.value);
 
-    this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
-      .subscribe(dados => {
+    if (this.formulario.valid) {
+      this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
+        .subscribe(dados => {
 
-        console.log(dados);
+          console.log(dados);
 
-        // this.formulario.reset();
-        this.resetar();
-      },
-        (error: any) => alert("Error"));
+          // this.formulario.reset();
+          this.resetar();
+        },
+          (error: any) => alert("Error"));
+    } else {
+      this.verificaValidacoesForm(this.formulario); 
+    }
+  }
+
+  verificaValidacoesForm(formGroup: FormGroup) {
+
+    Object.keys(formGroup.controls).forEach(campo => {
+      const controle = formGroup.get(campo);
+      controle.markAsTouched();
+      
+      if (controle instanceof FormGroup ) {
+        this.verificaValidacoesForm(controle); 
+      }
+    });
   }
 
   resetar() {
@@ -69,7 +83,6 @@ export class DataFormComponent implements OnInit {
     let campoEmail = this.formulario.get('email');
 
     if (campoEmail.errors) {
-
       return campoEmail.errors['email'] && campoEmail.touched;
     }
   }
@@ -96,7 +109,6 @@ export class DataFormComponent implements OnInit {
 
   populaDadosForm(dados) {
 
-   
     this.formulario.patchValue({
       endereco: {
         // cep: dados.cep,
@@ -111,7 +123,7 @@ export class DataFormComponent implements OnInit {
 
   resetaDadosForm() {
 
-   this.formulario.patchValue({
+    this.formulario.patchValue({
       endereco: {
         // cep: dados.cep,
         rua: null,
@@ -122,5 +134,4 @@ export class DataFormComponent implements OnInit {
       }
     });
   }
-
 }
