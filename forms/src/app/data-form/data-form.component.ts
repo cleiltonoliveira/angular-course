@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { DropdownService } from '../shared/services/dropdown.service';
+import { EstadoBr } from '../shared/models/estado-br';
 
 @Component({
   selector: 'app-data-form',
@@ -10,10 +12,19 @@ import { HttpClient } from '@angular/common/http';
 export class DataFormComponent implements OnInit {
 
   formulario: FormGroup;
+  estados: EstadoBr[];
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private dropdownService: DropdownService) { }
 
   ngOnInit(): void {
+
+    this.dropdownService.getEstadosBr().subscribe((res: EstadoBr[]) => {
+      this.estados = res;
+      console.log(res)
+    });
+
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
@@ -47,7 +58,7 @@ export class DataFormComponent implements OnInit {
         },
           (error: any) => alert("Error"));
     } else {
-      this.verificaValidacoesForm(this.formulario); 
+      this.verificaValidacoesForm(this.formulario);
     }
   }
 
@@ -56,9 +67,9 @@ export class DataFormComponent implements OnInit {
     Object.keys(formGroup.controls).forEach(campo => {
       const controle = formGroup.get(campo);
       controle.markAsTouched();
-      
-      if (controle instanceof FormGroup ) {
-        this.verificaValidacoesForm(controle); 
+
+      if (controle instanceof FormGroup) {
+        this.verificaValidacoesForm(controle);
       }
     });
   }
