@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 import { Observable } from 'rxjs';
+import { FormValidations } from '../shared/form-validations';
 
 @Component({
   selector: 'app-data-form',
@@ -42,7 +43,7 @@ export class DataFormComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       endereco: this.formBuilder.group(
         {
-          cep: [null, Validators.required],
+          cep: [null, [Validators.required, FormValidations.cepValidator]],
           numero: [null, Validators.required],
           complemento: [null],
           rua: [null, Validators.required],
@@ -63,8 +64,9 @@ export class DataFormComponent implements OnInit {
 
     const values = this.frameworks.map(v => new FormControl(false));
 
-    return this.formBuilder.array(values);
+    return this.formBuilder.array(values, FormValidations.requiredMinCheckbox(1));
   }
+
 
   onSubmit() {
 
@@ -75,9 +77,9 @@ export class DataFormComponent implements OnInit {
     valueSubmit = Object.assign(valueSubmit, {
       frameworks: valueSubmit.frameworks.map((v, i) => v ? this.frameworks[i] : null).filter(v => v !== null)
     });
-    
+
     console.log(valueSubmit);
-    
+
     if (this.formulario.valid) {
       this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit))
         .subscribe(dados => {
@@ -118,6 +120,10 @@ export class DataFormComponent implements OnInit {
 
   verificaValidTouched(campo: string) {
     return !this.formulario.get(campo).valid && this.formulario.get(campo).touched;
+  }
+
+  verificaRequired(campo: string) {
+    return this.formulario.get(campo).hasError('required') && (this.formulario.get(campo).touched || this.formulario.get(campo).dirty);
   }
 
   verificaEmailInvalido() {
