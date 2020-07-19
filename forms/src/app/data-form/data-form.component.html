@@ -1,6 +1,9 @@
 <form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
-    <div class="form-group form-row" [ngClass]="aplicaCssErro('nome')">
+    <app-input-field class="col-sm-12" formControlName="nome" [classeCss]="aplicaCssErro('nome')" id="nome" label="Nome"
+        [control]="formulario.get('nome')"></app-input-field>
+
+    <!-- <div class="form-group form-row" [ngClass]="aplicaCssErro('nome')">
 
         <div class="col-sm-12">
             <label for="nome" class="control-label">Nome</label>
@@ -12,7 +15,7 @@
             <app-error-msg [control]="formulario.get('nome')" label='nome'>
             </app-error-msg>
         </div>
-    </div>
+    </div> -->
 
     <div class="form-group form-row" [ngClass]="aplicaCssErro('email')">
         <div class="col-sm-12">
@@ -50,8 +53,8 @@
             <input email type="email" class="form-control" id="confirmarEmail" formControlName="confirmarEmail"
                 placeholder="nome@email.com">
 
-                <app-error-msg [control]="formulario.get('confirmarEmail')" label='confirmarEmail'>
-                </app-error-msg>
+            <app-error-msg [control]="formulario.get('confirmarEmail')" label='confirmarEmail'>
+            </app-error-msg>
 
             <!-- <app-campo-control-erro [mostrarErro]="formulario.get('confirmarEmail').hasError('equalsTo')"
                 msgErro="Emails não são iguais.">
@@ -65,10 +68,10 @@
             <div class="col-md-3" [ngClass]="aplicaCssErro('endereco.cep')">
                 <label for="cep" class="control-label">CEP</label>
                 <input type="text" id="cep" class="form-control" formControlName="cep">
-                
+
                 <app-error-msg [control]="formulario.get('endereco.cep')" label='CEP'>
                 </app-error-msg>
-                
+
                 <!-- <app-campo-control-erro [mostrarErro]="verificaRequired('endereco.cep')" msgErro="CEP é obrigatório.">
                 </app-campo-control-erro>
 
@@ -84,7 +87,7 @@
 
                 <app-error-msg [control]="formulario.get('endereco.numero')" label='Número'>
                 </app-error-msg>
-                
+
 
                 <!-- <app-campo-control-erro [mostrarErro]="verificaValidTouched('endereco.numero')"
                     msgErro="Número inválido.">
@@ -107,7 +110,7 @@
 
                 <app-error-msg [control]="formulario.get('endereco.rua')" label='Rua'>
                 </app-error-msg>
-                
+
                 <!-- <app-campo-control-erro [mostrarErro]="verificaValidTouched('endereco.rua')"
                     msgErro="Rua é obrigatório.">
                 </app-campo-control-erro> -->
@@ -120,7 +123,7 @@
 
                 <app-error-msg [control]="formulario.get('endereco.bairro')" label='Bairro'>
                 </app-error-msg>
-                
+
                 <!-- <app-campo-control-erro [mostrarErro]="verificaValidTouched('endereco.bairro')"
                     msgErro="Bairro é obrigatório.">
                 </app-campo-control-erro> -->
