@@ -8,14 +8,24 @@ import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { InputFieldComponent } from './input-field/input-field.component';
 import { FormsModule } from '@angular/forms';
 
-
-
 @NgModule({
-  declarations: [CampoControlErroComponent, FormDebugComponent, ErrorMsgComponent, InputFieldComponent],
+  declarations: [
+    CampoControlErroComponent,
+    FormDebugComponent,
+    ErrorMsgComponent,
+    InputFieldComponent
+  ],
   imports: [
-    CommonModule, HttpClientModule, FormsModule
+    CommonModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [DropdownService],
-  exports: [CampoControlErroComponent, FormDebugComponent, ErrorMsgComponent, InputFieldComponent]
+  exports: [
+    CampoControlErroComponent,
+    FormDebugComponent,
+    ErrorMsgComponent,
+    InputFieldComponent,
+  ]
 })
 export class SharedModule { }
