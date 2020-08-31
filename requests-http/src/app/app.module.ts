@@ -17,7 +17,6 @@ import { EnviarValorService } from './unsubscribe-rxjs/enviar-valor.service';
     HttpClientModule,
     CursosModule
   ],
-  providers: [EnviarValorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
