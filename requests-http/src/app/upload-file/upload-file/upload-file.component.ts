@@ -1,5 +1,6 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { filterResponse, uploadProgress } from 'src/app/shared/rxjs-operators';
 import { environment } from 'src/environments/environment';
 import { UploadFileService } from '../upload-file.service';
 
@@ -36,19 +37,29 @@ export class UploadFileComponent implements OnInit {
 
   onUpload() {
     if (this.files && this.files.size > 0) {
-      this.service.upload(this.files, environment.BASE_URL + '/upload').subscribe(
-        (event: HttpEvent<Object>) => {
-          console.log(event);
+      this.service.upload(this.files, environment.BASE_URL + '/upload')
+        .pipe(
+          uploadProgress(progress => {
+            this.progress = progress;
+          }),
+          filterResponse()
+        )
+        .subscribe(response => {
+          console.log('Upload concluído');
+        });
+      // .subscribe(
+      //   (event: HttpEvent<Object>) => {
+      //     console.log(event);
 
-          if (event.type === HttpEventType.Response) {
-            console.log('Upload concluído');
-          } else if (event.type === HttpEventType.UploadProgress) {
-            const percentDone = Math.round((event.loaded * 100) / event.total);
-            console.log('Progresso', percentDone);
-            this.progress = percentDone;
-          }
-        }
-      );
+      //     if (event.type === HttpEventType.Response) {
+      //       console.log('Upload concluído');
+      //     } else if (event.type === HttpEventType.UploadProgress) {
+      //       const percentDone = Math.round((event.loaded * 100) / event.total);
+      //       console.log('Progresso', percentDone);
+      //       this.progress = percentDone;
+      //     }
+      //   }
+      // );
     }
   }
 }
