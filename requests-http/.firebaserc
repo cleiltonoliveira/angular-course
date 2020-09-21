@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "curso-angular-6bf38": {
+      "hosting": {
+        "requests-http": [
+          "curso-angular-6bf38"
+        ]
+      }
+    }
+  }
+}
